@@ -19,9 +19,7 @@ node {
     stage('Build Docker Image') {
       sh "docker -H tcp://192.168.22.136:4243 build -t devopsexample:${env.BUILD_NUMBER} ."
     }
-	stage('Delete Old docker container'){
-	sh "docker -H tcp://192.168.22.136:4243 rm -f  devopsexample"
-    }
+
     
     stage('Deploy Docker Image'){
       	echo "Docker Image Tag Name: ${dockerImageTag}"
