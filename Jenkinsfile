@@ -18,10 +18,6 @@ node {
       sh "docker -H tcp://192.168.22.138:4243 build -t devopsexample:${env.BUILD_NUMBER} ."
     }
   
-  stage('Push Docker Image to Registry') {
-    sh "docker  -H tcp://192.168.22.138:4243 push devopsexample:${dockerImageTag}"
-  }
-  
   stage('Initialize Kubernetes') {
     sh 'kubectl config use-context my-kubernetes-cluster'
   }
