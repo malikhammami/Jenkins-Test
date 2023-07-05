@@ -14,9 +14,9 @@ node {
 	  def dockerHome = tool 'MyDocker'         
 	  env.PATH = "${dockerHome}/bin:${env.PATH}"     
     }
-  stage('Build Docker Image') {
-    sh "docker build -t devopsexample:${dockerImageTag} ."
-  }
+    stage('Build Docker Image') {
+      sh "docker -H tcp://192.168.22.138:4243 build -t devopsexample:${env.BUILD_NUMBER} ."
+    }
   
   stage('Push Docker Image to Registry') {
     sh "docker push devopsexample:${dockerImageTag}"
