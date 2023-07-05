@@ -17,13 +17,20 @@ node {
     }
     
     stage('Build Docker Image') {
-      sh "docker -H tcp://192.168.22.138:4243 build -t devopsexample:${env.BUILD_NUMBER} ."
+      sh "docker -H tcp://192.168.22.136:4243 build -t devopsexample:${env.BUILD_NUMBER} ."
     }
-
+	stage('Delete Old docker container'){
+	sh "docker -H tcp://192.168.22.138:4243 rm -f  devopsexample"
+    }
     
     stage('Deploy Docker Image'){
       	echo "Docker Image Tag Name: ${dockerImageTag}"
 	sh "docker -H tcp://192.168.22.138:4243 run --name devopsexample -d -p 2222:2222 devopsexample:${env.BUILD_NUMBER}"
     }
-
+	stage('Deployment') {
+    // Add your deployment steps here
+    
+    // Example 1: Deploying to Kubernetes using kubectl
+    sh "kubectl apply -f deployment.yaml"
+	}
 }
