@@ -19,7 +19,7 @@ node {
     }
   
   stage('Push Docker Image to Registry') {
-    sh "docker push devopsexample:${dockerImageTag}"
+    sh "docker  -H tcp://192.168.22.138:4243 push devopsexample:${dockerImageTag}"
   }
   
   stage('Initialize Kubernetes') {
